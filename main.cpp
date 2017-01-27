@@ -1,10 +1,12 @@
-#include "MainForm.h"
 #include <QApplication>
+
+#include "MainForm.h"
+#include "UiWidget.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainForm w;
+    UiWidget w;
     w.show();
 
     return a.exec();

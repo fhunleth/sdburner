@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ui/about.svg.png</file>
+        <file>ui/finished.svg.png</file>
+        <file>ui/fun.svg.png</file>
+        <file>ui/fun2.svg.png</file>
+        <file>ui/memcard.svg.png</file>
+        <file>ui/programming.svg.png</file>
+        <file>ui/programornot.svg.png</file>
+        <file>ui/remvsdcard.svg.png</file>
+    </qresource>
+</RCC>

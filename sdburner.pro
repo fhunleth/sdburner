@@ -6,13 +6,20 @@ TARGET = sdburner
 TEMPLATE = app
 
 SOURCES += main.cpp\
-    MainForm.cpp
+    MainForm.cpp \
+    FwupWrapper.cpp \
+    UiWidget.cpp
 
 HEADERS  += \
-    MainForm.h
+    MainForm.h \
+    FwupWrapper.h \
+    UiWidget.h
 
 FORMS    += \
     MainForm.ui
 
 target.path = /usr/bin
 INSTALLS += target
+
+RESOURCES += \
+    ui.qrc
