@@ -8,12 +8,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
     MainForm.cpp \
     FwupWrapper.cpp \
-    UiWidget.cpp
+    UiWidget.cpp \
+    App.cpp
 
 HEADERS  += \
     MainForm.h \
     FwupWrapper.h \
-    UiWidget.h
+    UiWidget.h \
+    App.h
 
 FORMS    += \
     MainForm.ui
@@ -23,3 +25,5 @@ INSTALLS += target
 
 RESOURCES += \
     ui.qrc
+
+STATECHARTS +=

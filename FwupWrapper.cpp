@@ -1,6 +1,8 @@
 #include "FwupWrapper.h"
 #include <QProcess>
 #include <QTimer>
+#include <QtEndian>
+
 
 FwupWrapper::FwupWrapper(QObject *parent) : QObject(parent),
     fwup_(0),
@@ -14,8 +16,18 @@ void FwupWrapper::apply()
         qFatal("Existing fwup call");
 
     fwup_ = new QProcess(this);
-    fwup_->setProgram("fwup");
     QStringList args;
+
+#if 0
+    fwup_->setProgram("fwup");
+#else
+    fwup_->setProgram("gksudo");
+    args << "--"
+         << "fwup";
+    useAutodetectedCard_ = false;
+    destinationPath_ = "/tmp/foo";
+#endif
+
     args << "--framing"
          << "--apply"
          << "-i" << inputPath_
@@ -90,13 +102,49 @@ void FwupWrapper::fwupReadReady()
     }
 }
 
+int FwupWrapper::processInput()
+{
+    quint32 len = qFromBigEndian<quint32>(inputBuffer_.constData());
+
+    if (len > 1000) {
+        qCritical("Bad length in fwup input: %d", len);
+        fwup_->kill();
+        return inputBuffer_.count();
+    }
+
+    len += 4; // Add the count field.
+
+    if (inputBuffer_.count() < (int) len)
+        return -1;
+
+    char messageType[2];
+    messageType[0] = inputBuffer_.at(4);
+    messageType[1] = inputBuffer_.at(5);
+
+    if (messageType[0] == 'O' && messageType[1] == 'K')
+        emit completed();
+    else if (messageType[0] == 'E' && messageType[1] == 'R' && len >= 8)
+        emit error(QString::fromLatin1(inputBuffer_.mid(8, len - 8)));
+    else if (messageType[0] == 'W' && messageType[1] == 'N' && len >= 8)
+        emit warning(QString::fromLatin1(inputBuffer_.mid(8, len - 8)));
+    else if (messageType[0] == 'P' && messageType[1] == 'R' && len >= 8)
+        emit progress(qFromBigEndian<qint16>(inputBuffer_.constData() + 6));
+    else {
+        qCritical("Received unexpected message from fwup: %c%c", messageType[0], messageType[1]);
+        fwup_->kill();
+        return inputBuffer_.count();
+    }
+
+    return len;
+}
+
 void FwupWrapper::fwupFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    QDataStream ds;
-
+    qCritical("fwup is done. exitCode=%d, status=%d", exitCode, exitStatus);
 }
 
 void FwupWrapper::cancel()
 {
-
+    qCritical("Cancelling fwup operation!");
+    fwup_->kill();
 }

@@ -42,6 +42,7 @@ public:
 signals:
     void progress(int percent);
     void error(QString reason);
+    void warning(QString reason);
     void completed();
 
 public slots:
@@ -50,6 +51,9 @@ public slots:
 private slots:
     void fwupReadReady();
     void fwupFinished(int,QProcess::ExitStatus);
+
+private:
+    int processInput();
 
 private:
     QProcess *fwup_;
