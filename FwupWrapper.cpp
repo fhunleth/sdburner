@@ -18,7 +18,7 @@ void FwupWrapper::apply()
     fwup_ = new QProcess(this);
     QStringList args;
 
-#if 0
+#ifndef HOST_DEBUGGING
     fwup_->setProgram("fwup");
 #else
     fwup_->setProgram("gksudo");
