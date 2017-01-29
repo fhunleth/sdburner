@@ -104,7 +104,8 @@ void FwupWrapper::fwupReadReady()
 
 int FwupWrapper::processInput()
 {
-    quint32 len = qFromBigEndian<quint32>(inputBuffer_.constData());
+    const uchar *inputData = (const uchar *) inputBuffer_.constData();
+    quint32 len = qFromBigEndian<quint32>(inputData);
 
     if (len > 1000) {
         qCritical("Bad length in fwup input: %d", len);
@@ -128,7 +129,7 @@ int FwupWrapper::processInput()
     else if (messageType[0] == 'W' && messageType[1] == 'N' && len >= 8)
         emit warning(QString::fromLatin1(inputBuffer_.mid(8, len - 8)));
     else if (messageType[0] == 'P' && messageType[1] == 'R' && len >= 8)
-        emit progress(qFromBigEndian<qint16>(inputBuffer_.constData() + 6));
+        emit progress(qFromBigEndian<qint16>(inputData + 6));
     else {
         qCritical("Received unexpected message from fwup: %c%c", messageType[0], messageType[1]);
         fwup_->kill();

@@ -55,7 +55,7 @@ void UiWidget::paintEvent(QPaintEvent *)
 
     if (screens_[currentScreen_].showProgress) {
         p.setFont(QFont("Sans", 30));
-        p.drawText(QRect(0, 70, 320, 40), Qt::AlignHCenter, tr("%1%").arg(progress_));
+        p.drawText(QRect(0, 60, 320, 50), Qt::AlignHCenter, tr("%1%").arg(progress_));
     }
 }
 
