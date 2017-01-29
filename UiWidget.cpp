@@ -7,13 +7,15 @@ UiWidget::UiWidget(QWidget *parent) : QWidget(parent)
     resize(320, 240);
 
     currentScreen_ = 0;
-    screens_ << QImage(":/ui/about.svg.png")
+    screens_
              << QImage(":/ui/memcard.svg.png")
-             << QImage(":/ui/finished.svg.png")
+             << QImage(":/ui/about.svg.png")
              << QImage(":/ui/fun.svg.png")
+             << QImage(":/ui/fun1_5.svg.png")
              << QImage(":/ui/fun2.svg.png")
-             << QImage(":/ui/programming.svg.png")
              << QImage(":/ui/programornot.svg.png")
+             << QImage(":/ui/programming.svg.png")
+             << QImage(":/ui/finished.svg.png")
              << QImage(":/ui/remvsdcard.svg.png");
 }
 

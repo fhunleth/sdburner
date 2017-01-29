@@ -10,6 +10,13 @@ class FwupWrapper : public QObject
 {
     Q_OBJECT
 public:
+    struct MemoryCard {
+        MemoryCard(QString where, qint64 howbig) : path(where), size(howbig) {}
+
+        QString path;
+        qint64 size;
+    };
+
     explicit FwupWrapper(QObject *parent = 0);
 
     void setInput(const QString &path) { inputPath_ = path; }
@@ -21,6 +28,9 @@ public:
     void setTask(const QString &name) { task_ = name; }
     QString task() const { return task_; }
 
+    void setUseAutodetectedCard(bool yes) { useAutodetectedCard_ = yes; }
+    bool useAutodetectedCard() const { return useAutodetectedCard_; }
+
     void apply();
 
     QString version() const;
@@ -28,10 +38,8 @@ public:
     void startDetection();
     void stopDetection();
 
-    QStringList detectMemoryCards() const;
+    QList<MemoryCard> detectMemoryCards() const;
 signals:
-    void memoryCardsDetected(QStringList paths);
-
     void progress(int percent);
     void error(QString reason);
     void completed();
@@ -42,7 +50,6 @@ public slots:
 private slots:
     void fwupReadReady();
     void fwupFinished(int,QProcess::ExitStatus);
-    void detectionTimeout();
 
 private:
     QProcess *fwup_;
@@ -50,9 +57,9 @@ private:
     QString inputPath_;
     QString destinationPath_;
     QString task_;
+    bool useAutodetectedCard_;
 
-    QTimer *detectionTimer_;
-    QStringList currentlyDetectedCards_;
+    QByteArray inputBuffer_;
 };
 
 #endif // FWUPWRAPPER_H

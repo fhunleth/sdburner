@@ -8,5 +8,6 @@
         <file>ui/programming.svg.png</file>
         <file>ui/programornot.svg.png</file>
         <file>ui/remvsdcard.svg.png</file>
+        <file>ui/fun1_5.svg.png</file>
     </qresource>
 </RCC>
