@@ -142,6 +142,8 @@ int FwupWrapper::processInput()
 void FwupWrapper::fwupFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
     qCritical("fwup is done. exitCode=%d, status=%d", exitCode, exitStatus);
+    fwup_->deleteLater();
+    fwup_ = 0;
 }
 
 void FwupWrapper::cancel()
