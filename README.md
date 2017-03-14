@@ -3,9 +3,10 @@
 The project contains the GUI and programming logic for the Raspberry Pi SDCard
 programmer that we use at [CoderDojoDC](http://coderdojodc.com). Students and
 mentors use it to program or reset the MicroSD cards that are used in our
-Raspberry Pi workstations. Through some pain, we found that programming SDCards
-using laptops was harder and more time consuming than it looked even with tools
-like Etcher.io.
+Raspberry Pi workstations. Through some pain, we found that making Raspbian
+MicroSD cards on the many kinds of laptops at our CoderDojo was surprisingly
+hard (even with Etcher.io). And yes, we actually mess up the software on the
+Raspberry Pis frequently, but that's ok since they're easy to recover now.
 
 Here's Alexa explaining how to use the programmer (she helped make it):
 
@@ -14,13 +15,13 @@ Here's Alexa explaining how to use the programmer (she helped make it):
 To build one yourself, you'll need the following:
 
 1. Raspberry Pi 2 (It should work on the other Raspberry Pi's too, but the
-   Buildroot project will need to be updated.)
+   Buildroot project may need to be updated.)
 2. Adafruit [PiTFT 2.2" HAT w/ buttons](https://www.adafruit.com/products/2315)
 3. USB card reader
 4. Standoffs, other hardware to hold everything together
 
 The software side is not that easy to build, but if enough people are
-interested, we'll write up instructions. In the end, it's just copying an image
+interested, we'll try to make it easier. In the end, it's just copying an image
 to a MicroSD card and putting it in the Raspberry Pi 2, but for now you'll need
 to build it yourself. The image builder can be found at
 [fhunleth-buildroot-experiments](https://github.com/fhunleth/fhunleth-buildroot-experiments)
