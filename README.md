@@ -17,9 +17,9 @@ To build one yourself, you'll need the following:
    Buildroot project will need to be updated.)
 2. Adafruit [PiTFT 2.2" HAT w/ buttons](https://www.adafruit.com/products/2315)
 3. USB card reader
-4. Standoffs, other hardware to put keep it together
+4. Standoffs, other hardware to hold everything together
 
-The software side is not that easy to build right now, but if enough people are
+The software side is not that easy to build, but if enough people are
 interested, we'll write up instructions. In the end, it's just copying an image
 to a MicroSD card and putting it in the Raspberry Pi 2, but for now you'll need
 to build it yourself. The image builder can be found at
@@ -28,13 +28,14 @@ using the `rpi2_sdburner_defconfig` configuration. Buildroot knowledge is
 probably required... Sorry. :(
 
 The program uses [fwup](https://github.com/fhunleth/fwup) to write the image to
-the SDCard. This simplified a few things in the program, but a step to creating
-the software image that gets copied to the MicroSD card. We use an image from
+the SDCard. This simplified a few things in the program, but added a step to
+prepping the Raspbian image that you want to use. We use an image from
 Dexter Industries for our Raspberry Pis. It is really just Raspbian with a few
 additional programs installed by default. `fwup` compresses the image so that it
-doesn't take much space up on the MicroSD card being used for the programmer and
-it also has nice logic for detecting the SDCard, reporting progress and errors,
-and has some optimizations for programming the cards quickly (well, quickly for
+doesn't take much space up on the programming device's MicroSD card (we use an
+old, slow and small MicroSD card for it) and
+it also has logic for detecting the MicroSD cards, reporting progress and errors,
+and programming them quickly (well, quickly for
 how large they are).
 
 The `fwup` programmer needs a `.fw` file. To make it, create a `fwup`
