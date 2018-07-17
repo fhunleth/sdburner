@@ -21,6 +21,7 @@ App::App(QObject *parent) : QObject(parent),
     fwup_->setInput("/home/fhunleth/raspberrypi/sdcard.fw");
 #else
     fwup_->setInput("/mnt/sdcard.fw");
+    fwup_->setUseAutodetectedCard(true);
 #endif
 
     sdcardPoller_ = new QTimer(this);

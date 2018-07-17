@@ -2,11 +2,12 @@
 #include <QProcess>
 #include <QTimer>
 #include <QtEndian>
-
+#include <QDebug>
 
 FwupWrapper::FwupWrapper(QObject *parent) : QObject(parent),
     fwup_(0),
-    task_("complete")
+    task_("complete"),
+    useAutodetectedCard_(false)
 {
 }
 
@@ -43,6 +44,7 @@ void FwupWrapper::apply()
     }
 
     fwup_->setArguments(args);
+    qDebug() << "Running fwup " << fwup_->arguments();
     connect(fwup_, SIGNAL(readyRead()), SLOT(fwupReadReady()));
     connect(fwup_, SIGNAL(finished(int,QProcess::ExitStatus)), SLOT(fwupFinished(int,QProcess::ExitStatus)));
 
@@ -55,6 +57,7 @@ QString FwupWrapper::version() const
     QProcess p;
     p.setProgram("fwup");
     p.setArguments(QStringList() << "--version");
+    qDebug() << "Running fwup " << p.arguments();
     p.start(QProcess::ReadOnly);
     if (!p.waitForFinished(1000)) {
         qCritical("fwup call to get version timed out");
