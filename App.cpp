@@ -18,9 +18,9 @@ App::App(QObject *parent) : QObject(parent),
     connect(fwup_, SIGNAL(completed()), SLOT(completed()));
 
 #ifdef HOST_DEBUGGING
-    fwup_->setInput("/home/fhunleth/raspberrypi/dexter_industries_jessie-2016.12.04.fw");
+    fwup_->setInput("/home/fhunleth/raspberrypi/sdcard.fw");
 #else
-    fwup_->setInput("/mnt/dexter_industries_jessie-2016.12.04.fw");
+    fwup_->setInput("/mnt/sdcard.fw");
 #endif
 
     sdcardPoller_ = new QTimer(this);
@@ -34,7 +34,7 @@ App::~App()
 }
 
 void App::start()
-{    
+{
     ui_->show();
 
 #if 1
